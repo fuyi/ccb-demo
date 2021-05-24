@@ -1,0 +1,154 @@
+{
+    "userFeatures": {
+        "age": 24,
+        "gender": "male"
+    },
+
+    "actionFeatures": [
+        {
+            "category": "top",
+            "price": 20
+        },
+        {
+            "category": "hat",
+            "price": 20
+        },
+        {
+            "category": "trousers",
+            "price": 20
+        },
+        {
+            "category": "top",
+            "price": 100
+        },
+        {
+            "category": "hat",
+            "price": 100
+        },
+        {
+            "category": "trousers",
+            "price": 100
+        },
+        {
+            "category": "top",
+            "price": 150
+        },
+        {
+            "category": "hat",
+            "price": 150
+        },
+        {
+            "category": "trousers",
+            "price": 150
+        },
+        {
+            "category": "top",
+            "price": 20
+        },
+        {
+            "category": "hat",
+            "price": 20
+        },
+        {
+            "category": "trousers",
+            "price": 20
+        },
+        {
+            "category": "top",
+            "price": 100
+        },
+        {
+            "category": "hat",
+            "price": 100
+        },
+        {
+            "category": "trousers",
+            "price": 100
+        },
+        {
+            "category": "top",
+            "price": 150
+        },
+        {
+            "category": "hat",
+            "price": 150
+        },
+        {
+            "category": "trousers",
+            "price": 150
+        },
+        {
+            "category": "top",
+            "price": 20
+        },
+        {
+            "category": "hat",
+            "price": 20
+        },
+        {
+            "category": "trousers",
+            "price": 20
+        },
+        {
+            "category": "top",
+            "price": 100
+        },
+        {
+            "category": "hat",
+            "price": 100
+        },
+        {
+            "category": "trousers",
+            "price": 100
+        },
+        {
+            "category": "top",
+            "price": 150
+        },
+        {
+            "category": "hat",
+            "price": 150
+        },
+        {
+            "category": "trousers",
+            "price": 150
+        },
+        {
+            "category": "top",
+            "price": 20
+        },
+        {
+            "category": "hat",
+            "price": 20
+        },
+        {
+            "category": "trousers",
+            "price": 20
+        },
+        {
+            "category": "top",
+            "price": 100
+        },
+        {
+            "category": "hat",
+            "price": 100
+        },
+        {
+            "category": "trousers",
+            "price": 100
+        },
+        {
+            "category": "top",
+            "price": 150
+        },
+        {
+            "category": "hat",
+            "price": 150
+        },
+        {
+            "category": "trousers",
+            "price": 150
+        }
+    ],
+    "slotCount": 4
+}

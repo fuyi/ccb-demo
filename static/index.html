@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script   src="https://code.jquery.com/jquery-3.5.1.min.js"   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="   crossorigin="anonymous"></script>
+    <script>
+        var predictionId = "";
+        const numSlots = 4;
+        var recommendationCounts = {}
+        function get_options() {
+            $.get( "/get_options").done(function( data ) {
+                console.log(data);
+            });
+        }
+        function getRecommendation() {
+            recommendationContext = JSON.parse($("#recommendationJson").text())
+            $.post( "/recommend", JSON.stringify(recommendationContext))
+                .done(function( data ) {
+                    predictionId = data["predictionId"]
+                    console.log(data);
+                    for(var i = 0; i < numSlots; ++i) {
+                        // TODO check hat:50 bug
+                        // console.log(data["rank"][i]);
+                        // console.log(i);
+                        // console.log('foo');
+                        var recommendationCategory = recommendationContext["actionFeatures"][data["rank"][i]["actionIndex"]]["category"]
+                        if (recommendationCategory in recommendationCounts) {
+                            recommendationCounts[recommendationCategory] += 1
+                        } else {
+                            recommendationCounts[recommendationCategory] = 1
+                        }
+
+                        $(`#slot${i}`).text(
+                            JSON.stringify(recommendationContext["actionFeatures"][data["rank"][i]["actionIndex"]])
+                        );
+                    }
+                    $("#recommendationCounts").text(
+                            JSON.stringify(recommendationCounts)
+                    );
+                });
+        }
+        function sendReward(slotIndex, reward) {
+            $.post( "/reward", JSON.stringify({
+                "predictionId": predictionId,
+                "slotIndex": slotIndex,
+                "reward": reward
+            })).done(function( data ) {
+                console.log("sent reward");
+            });
+        }
+        function learn() {
+            $.post( "/learn", JSON.stringify({
+                "predictionId": predictionId
+            })).done(function( data ) {
+                console.log("one-step learn complete");
+                getRecommendation();
+            });
+        }
+        function save() {
+            $.get( "/save").done(function( data ) {
+                console.log("save complete");
+            });
+        }
+
+        get_options();
+    </script>
+</head>
+
+<body onload="getRecommendation();">
+    <div>
+        <h1>CCB demo</h1>
+        <h2>Context</h2>
+        <code id="recommendationJson">
+            {
+                "userFeatures": {
+                    "age": 24,
+                    "gender": "male"
+                },
+            
+                "actionFeatures": [
+                    {
+                        "category": "top",
+                        "price": 50
+                    },
+                    {
+                        "category": "hat",
+                        "price": 50
+                    },
+                    {
+                        "category": "trousers",
+                        "price": 50
+                    },
+                    {
+                        "category": "top",
+                        "price": 100
+                    },
+                    {
+                        "category": "hat",
+                        "price": 100,
+                        "size": "XL"
+                    },
+                    {
+                        "category": "trousers",
+                        "price": 100
+                    },
+                    {
+                        "category": "top",
+                        "price": 150,
+                        "size": "XS"
+                    },
+                    {
+                        "category": "hat",
+                        "price": 150
+                    },
+                    {
+                        "category": "trousers",
+                        "price": 150
+                    },
+                    {
+                        "category": "top",
+                        "price": 200
+                    },
+                    {
+                        "category": "hat",
+                        "price": 200
+                    },
+                    {
+                        "category": "trousers",
+                        "price": 200
+                    }
+                ],
+                "slotCount": 4
+            }
+        </code>
+    </div>
+    <div>
+        <h3>Recommendation counts</h3>
+        <code id="recommendationCounts"></code>
+    </div>
+    <div id="recommendation">
+        <h2>Recommendations</h2>
+        <div><code id="slot0"></code></div><button id="rewardButton0" onclick="sendReward(0, 1);">Reward + 1</button>
+        <div><code id="slot1"></code></div><button id="rewardButton1" onclick="sendReward(1, 1);">Reward + 1</button>
+        <div><code id="slot2"></code></div><button id="rewardButton2" onclick="sendReward(2, 1);">Reward + 1</button>
+        <div><code id="slot3"></code></div><button id="rewardButton3" onclick="sendReward(3, 1);">Reward + 1</button>
+    </div>
+    <div>
+        <button onclick="save();">Save bandit data to ccb-bandit-data.txt</button>
+        <button onclick="learn();">Next round</button>
+    </div>
+</body>
+
+</html>
